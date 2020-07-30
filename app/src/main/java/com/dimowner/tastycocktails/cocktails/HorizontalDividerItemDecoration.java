@@ -2,12 +2,14 @@ package com.dimowner.tastycocktails.cocktails;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.support.v7.widget.RecyclerView;
+
 import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.LinearLayout;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import timber.log.Timber;
 

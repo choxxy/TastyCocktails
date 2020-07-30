@@ -5,13 +5,15 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SwitchCompat;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -20,7 +22,6 @@ import com.dimowner.tastycocktails.AboutDialog;
 import com.dimowner.tastycocktails.AdvHandler;
 import com.dimowner.tastycocktails.R;
 import com.dimowner.tastycocktails.TCApplication;
-import com.dimowner.tastycocktails.analytics.MixPanel;
 import com.dimowner.tastycocktails.data.Prefs;
 import com.dimowner.tastycocktails.licences.LicenceActivity;
 import com.google.android.gms.ads.AdView;
@@ -52,11 +53,6 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
 		showAdsSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
 			prefs.setShowAds(isChecked);
-			if (isChecked) {
-				TCApplication.event(getApplicationContext(), MixPanel.EVENT_ENABLE_ADS);
-			} else {
-				TCApplication.event(getApplicationContext(), MixPanel.EVENT_DISABLE_ADS);
-			}
 		});
 
 		TextView btnLicences = findViewById(R.id.btnLicences);
@@ -73,7 +69,6 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 		AdView adView = findViewById(R.id.adView);
 		advHandler = new AdvHandler(adView, prefs);
 
-		TCApplication.event(getApplicationContext(), MixPanel.EVENT_SETTINGS);
 	}
 
 	@Override
@@ -122,7 +117,6 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 	}
 
 	public void rateApp() {
-		TCApplication.event(getApplicationContext(), MixPanel.EVENT_RATE_APP);
 		try {
 			Intent rateIntent = rateIntentForUrl("market://details");
 			startActivity(rateIntent);

@@ -19,15 +19,6 @@ package com.dimowner.tastycocktails.random;
 import android.app.ActivityOptions;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -36,12 +27,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import javax.inject.Inject;
 
 import com.dimowner.tastycocktails.AdvHandler;
 import com.dimowner.tastycocktails.R;
 import com.dimowner.tastycocktails.TCApplication;
-import com.dimowner.tastycocktails.analytics.MixPanel;
 import com.dimowner.tastycocktails.cocktails.details.ImagePreviewActivity;
 import com.dimowner.tastycocktails.cocktails.details.IngredientsAdapter;
 import com.dimowner.tastycocktails.dagger.random.RandomCocktailModule;
@@ -49,6 +47,8 @@ import com.dimowner.tastycocktails.data.Prefs;
 import com.dimowner.tastycocktails.util.AndroidUtils;
 import com.dimowner.tastycocktails.util.AnimationUtil;
 import com.google.android.gms.ads.AdView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 /**
  * Created on 27.07.2017.
@@ -113,7 +113,6 @@ public class RandomFragment extends Fragment {
 		fab = view.findViewById(R.id.fab);
 		fab.setOnClickListener(v -> {
 				mPresenter.loadRandomDrink();
-				TCApplication.event(getActivity().getApplicationContext(), MixPanel.EVENT_NEW_RANDOM_DRINK);
 			});
 
 		btnFavorite.setOnClickListener(v -> mPresenter.reverseFavorite());
@@ -132,7 +131,6 @@ public class RandomFragment extends Fragment {
 		AdView adView = view.findViewById(R.id.adView);
 		advHandler = new AdvHandler(adView, prefs);
 
-		TCApplication.event(getActivity().getApplicationContext(), MixPanel.EVENT_RANDOM);
 	}
 
 	@Override

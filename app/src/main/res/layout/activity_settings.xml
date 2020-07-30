@@ -15,7 +15,7 @@
   ~  limitations under the License.
   -->
 
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.ConstraintLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
 		android:layout_width="match_parent"
@@ -141,4 +141,4 @@
 			app:adUnitId="@string/bottom_banner_id"
 			app:layout_constraintBottom_toBottomOf="parent" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.ConstraintLayout>

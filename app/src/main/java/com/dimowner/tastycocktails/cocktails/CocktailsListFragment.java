@@ -21,21 +21,20 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Animatable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
-import android.support.v7.widget.helper.ItemTouchHelper;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -69,7 +68,6 @@ import com.dimowner.tastycocktails.AdvHandler;
 import com.dimowner.tastycocktails.AppConstants;
 import com.dimowner.tastycocktails.R;
 import com.dimowner.tastycocktails.TCApplication;
-import com.dimowner.tastycocktails.analytics.MixPanel;
 import com.dimowner.tastycocktails.cocktails.details.PagerDetailsActivity;
 import com.dimowner.tastycocktails.cocktails.list.CocktailsRecyclerAdapter;
 import com.dimowner.tastycocktails.cocktails.list.ListItem;
@@ -81,6 +79,8 @@ import com.dimowner.tastycocktails.util.UIUtil;
 import com.dimowner.tastycocktails.widget.ThresholdListener;
 import com.dimowner.tastycocktails.widget.TouchLayout;
 import com.google.android.gms.ads.AdView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import timber.log.Timber;
 
@@ -178,17 +178,6 @@ public class CocktailsListFragment extends Fragment implements CocktailsListCont
 			fragmentType = getArguments().getInt(EXTRAS_KEY_TYPE);
 		}
 
-		switch (fragmentType) {
-			case TYPE_NORMAL:
-				TCApplication.event(getActivity().getApplicationContext(), MixPanel.EVENT_HOME);
-				break;
-			case TYPE_FAVORITES:
-				TCApplication.event(getActivity().getApplicationContext(), MixPanel.EVENT_FAVORITES);
-				break;
-			case TYPE_HISTORY:
-				TCApplication.event(getActivity().getApplicationContext(), MixPanel.EVENT_HISTORY);
-				break;
-		}
 	}
 
 	@Nullable

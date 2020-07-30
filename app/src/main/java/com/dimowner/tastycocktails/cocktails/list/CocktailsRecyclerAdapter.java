@@ -17,10 +17,7 @@
 package com.dimowner.tastycocktails.cocktails.list;
 
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.util.DiffUtil;
-import android.support.v7.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +25,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -171,7 +173,7 @@ public class CocktailsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
 						.listener(new RequestListener<Drawable>() {
 							@Override
 							public boolean onLoadFailed(@Nullable GlideException e, Object model,
-																 Target<Drawable> target, boolean isFirstResource) {
+														Target<Drawable> target, boolean isFirstResource) {
 								holder.image.setImageResource(R.drawable.no_image);
 								return false;
 							}

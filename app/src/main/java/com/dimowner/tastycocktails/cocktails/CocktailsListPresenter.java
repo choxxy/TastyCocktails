@@ -17,9 +17,11 @@
 package com.dimowner.tastycocktails.cocktails;
 
 import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
 import android.content.Context;
-import android.support.annotation.NonNull;
+
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -16,7 +16,7 @@
 
 package com.dimowner.tastycocktails.data;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import java.util.List;
 
@@ -35,7 +35,6 @@ public interface RepositoryContract {
 	Flowable<List<Drink>> searchCocktailsByName(@NonNull String search);
 	Flowable<List<Drink>> searchCocktailsByNameLocal(@NonNull String search);
 	Flowable<List<Drink>> getDrinksHistory(int page);
-//	Flowable<List<Drink>> loadDrinksWithFilter(int filterType, String value);
 	Flowable<List<Drink>> loadFilteredDrinks(String category, String  ingredient, String  glass, String alcoholic);
 	Single<Drink> getRandomCocktail();
 	Flowable<Drink> getCocktailRx(long id);

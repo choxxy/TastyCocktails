@@ -16,9 +16,9 @@
 
 package com.dimowner.tastycocktails.dagger.details;
 
-import android.arch.lifecycle.ViewModelProviders;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import dagger.Module;
 import dagger.Provides;

@@ -1,6 +1,7 @@
 package com.dimowner.tastycocktails;
 
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 public interface Contract {
 

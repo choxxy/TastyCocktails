@@ -16,12 +16,14 @@
 
 package com.dimowner.tastycocktails.dagger.application;
 
-import android.arch.persistence.db.SupportSQLiteDatabase;
-import android.arch.persistence.room.Room;
-import android.arch.persistence.room.migration.Migration;
+
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.VisibleForTesting;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
+import androidx.room.Room;
+import androidx.room.migration.Migration;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import javax.inject.Singleton;
 
@@ -29,7 +31,6 @@ import dagger.Module;
 import dagger.Provides;
 
 import com.dimowner.tastycocktails.FirebaseHandler;
-import com.dimowner.tastycocktails.analytics.MixPanel;
 import com.dimowner.tastycocktails.data.LocalRepository;
 import com.dimowner.tastycocktails.data.Prefs;
 import com.dimowner.tastycocktails.data.RemoteRepository;
@@ -76,11 +77,6 @@ public class AppModule {
 		return new Repository(localRepository, remoteRepository);
 	}
 
-	@Provides
-	@Singleton
-	MixPanel provideMixPanel() {
-		return new MixPanel();
-	}
 
 	@Provides
 	@Singleton

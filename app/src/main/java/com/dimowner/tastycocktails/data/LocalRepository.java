@@ -16,11 +16,12 @@
 
 package com.dimowner.tastycocktails.data;
 
-import android.arch.persistence.db.SimpleSQLiteQuery;
-import android.arch.persistence.db.SupportSQLiteQuery;
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
+
+import androidx.annotation.NonNull;
+import androidx.sqlite.db.SimpleSQLiteQuery;
+import androidx.sqlite.db.SupportSQLiteQuery;
 
 import java.util.ArrayList;
 import java.util.Arrays;

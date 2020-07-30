@@ -16,31 +16,23 @@
 
 package com.dimowner.tastycocktails;
 
-import android.animation.Animator;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import com.dimowner.tastycocktails.analytics.MixPanel;
-import com.dimowner.tastycocktails.licences.LicenceActivity;
-import com.dimowner.tastycocktails.util.AndroidUtils;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
+
 
 /**
  * Dialog shows information about application.
@@ -141,8 +133,6 @@ public class AboutDialog extends DialogFragment {
 //			View decorView = alertDialog.getWindow().getDecorView();
 //			alertDialog.setOnShowListener(dialogInterface -> revealShow(decorView));
 //		}
-
-		TCApplication.event(getActivity().getApplicationContext(), MixPanel.EVENT_ABOUT);
 		return alertDialog;
 	}
 

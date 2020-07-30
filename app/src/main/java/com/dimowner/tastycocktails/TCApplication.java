@@ -21,10 +21,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import com.crashlytics.android.Crashlytics;
-import com.dimowner.tastycocktails.analytics.MixPanel;
 import com.dimowner.tastycocktails.dagger.application.AppComponent;
 import com.dimowner.tastycocktails.dagger.application.AppModule;
 import com.dimowner.tastycocktails.dagger.application.DaggerAppComponent;
@@ -40,30 +40,17 @@ import timber.log.Timber;
  * Created on 25.07.2017.
  * @author Dimowner
  */
-public class TCApplication extends android.support.multidex.MultiDexApplication {
+public class TCApplication extends Application {
 
 	final static String CONNECTIVITY_ACTION = "android.net.conn.CONNECTIVITY_CHANGE";
 	private NetworkStateChangeReceiver networkStateChangeReceiver;
 	private static boolean isConnectedToNetwork = false;
-	@Inject
-	MixPanel mixPanel;
 
 	private AppStartTracker startTracker = new AppStartTracker();
 
-	public static AppStartTracker getAppStartTracker(Context context) {
-		return ((TCApplication) context).getStartTracker();
-	}
-
-	public static void event(Context context, String event) {
-		((TCApplication) context).getMixPanel().trackData(event);
-	}
 
 	private AppStartTracker getStartTracker() {
 		return startTracker;
-	}
-
-	private MixPanel getMixPanel() {
-		return mixPanel;
 	}
 
 	public static boolean isConnected() {
@@ -88,7 +75,7 @@ public class TCApplication extends android.support.multidex.MultiDexApplication 
 		}
 		startTracker.appOnCreate();
 		super.onCreate();
-		Fabric.with(this, new Crashlytics());
+
 		appComponent = prepareAppComponent().build();
 		appComponent.inject(this);
 
@@ -98,7 +85,7 @@ public class TCApplication extends android.support.multidex.MultiDexApplication 
 		networkStateChangeReceiver = new NetworkStateChangeReceiver();
 		registerReceiver(networkStateChangeReceiver, intentFilter);
 
-		registerActivityLifecycleCallbacks(mixPanel);
+
 	}
 
 	@Override

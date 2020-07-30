@@ -1,9 +1,10 @@
 package com.dimowner.tastycocktails.cocktails.details;
 
 import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
-import android.support.annotation.NonNull;
 import android.util.SparseArray;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 
 import com.dimowner.tastycocktails.FirebaseHandler;
 import com.dimowner.tastycocktails.data.RepositoryContract;
