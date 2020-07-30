@@ -1,19 +1,19 @@
 buildscript {
 	repositories {
-		mavenCentral()
+		jcenter()
 		google()
 	}
 	dependencies {
-		classpath 'com.google.gms:google-services:4.2.0'
-		classpath 'com.android.tools.build:gradle:3.3.1'
+		classpath 'com.android.tools.build:gradle:4.1.0-beta05'
+		// Add the Crashlytics Gradle plugin.
+		classpath 'com.google.firebase:firebase-crashlytics-gradle:2.2.0'
 	}
 }
 
 allprojects {
 	repositories {
+		jcenter()
 		google()
-		mavenCentral()
-		maven { url 'https://maven.google.com' }
 		maven { url "https://jitpack.io" }
 	}
 }

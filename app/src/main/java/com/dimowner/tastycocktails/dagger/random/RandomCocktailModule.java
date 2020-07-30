@@ -16,16 +16,13 @@
 
 package com.dimowner.tastycocktails.dagger.random;
 
-import android.arch.lifecycle.ViewModelProviders;
-import android.support.v4.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.fragment.app.Fragment;
 
 import dagger.Module;
 import dagger.Provides;
 
 import com.dimowner.tastycocktails.FirebaseHandler;
-import com.dimowner.tastycocktails.cocktails.details.DetailsViewModel;
-import com.dimowner.tastycocktails.cocktails.details.DetailsViewModelImpl;
-import com.dimowner.tastycocktails.dagger.details.DetailsScoupe;
 import com.dimowner.tastycocktails.data.Repository;
 import com.dimowner.tastycocktails.random.RandomContract;
 import com.dimowner.tastycocktails.random.RandomPresenter;

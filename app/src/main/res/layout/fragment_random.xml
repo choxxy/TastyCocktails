@@ -23,7 +23,7 @@
 		<!--android:layout_height="match_parent"-->
 		<!--android:orientation="vertical">-->
 
-	<android.support.design.widget.CoordinatorLayout
+	<androidx.coordinatorlayout.widget.CoordinatorLayout
 			xmlns:android="http://schemas.android.com/apk/res/android"
 			xmlns:app="http://schemas.android.com/apk/res-auto"
 			xmlns:tools="http://schemas.android.com/tools"
@@ -220,7 +220,7 @@
 				android:src="@drawable/dice_5"
 				app:fabSize="normal"
 				tools:visibility="visible"/>
-	</android.support.design.widget.CoordinatorLayout>
+	</androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 	<!--<com.google.android.gms.ads.AdView-->
 			<!--android:id="@+id/adView"-->

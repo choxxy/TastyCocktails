@@ -24,7 +24,7 @@
 		android:layout_height="wrap_content"
 		>
 
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
 
 		android:id="@+id/constraint_layout"
 		android:layout_width="match_parent"
@@ -253,5 +253,5 @@
 			app:layout_constraintRight_toRightOf="parent"
 			app:layout_constraintTop_toBottomOf="@+id/details_glass_label"/>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

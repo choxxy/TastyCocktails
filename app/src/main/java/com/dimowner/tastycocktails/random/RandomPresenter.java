@@ -17,7 +17,7 @@
 package com.dimowner.tastycocktails.random;
 
 import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
+import androidx.lifecycle.AndroidViewModel;
 import android.support.annotation.NonNull;
 
 import java.util.List;

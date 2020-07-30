@@ -16,8 +16,8 @@
 
 package com.dimowner.tastycocktails.data;
 
-import android.arch.persistence.db.SimpleSQLiteQuery;
-import android.arch.persistence.db.SupportSQLiteQuery;
+import androidx.sqlite.db.SimpleSQLiteQuery;
+import androidx.sqlite.db.SupportSQLiteQuery;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;

@@ -1,6 +1,6 @@
 package com.dimowner.tastycocktails.rating;
 
-import android.arch.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
 
 import com.dimowner.tastycocktails.AppConstants;

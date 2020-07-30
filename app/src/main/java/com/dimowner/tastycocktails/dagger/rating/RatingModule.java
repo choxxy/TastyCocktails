@@ -16,11 +16,11 @@
 
 package com.dimowner.tastycocktails.dagger.rating;
 
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
-import android.arch.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 
 import com.dimowner.tastycocktails.FirebaseHandler;
 import com.dimowner.tastycocktails.data.Prefs;
