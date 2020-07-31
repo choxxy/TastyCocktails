@@ -16,7 +16,7 @@
   ~ limitations under the License.
   -->
 
-<androidx.constraintlayout.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
 		xmlns:tools="http://schemas.android.com/tools"
@@ -214,14 +214,14 @@
 			app:layout_constraintRight_toRightOf="parent"
 			app:layout_constraintTop_toBottomOf="@+id/details_image"/>
 
-	<androidx.constraintlayout.Guideline
+	<androidx.constraintlayout.widget.Guideline
 			android:id="@+id/guideline"
 			android:layout_width="1dp"
 			android:layout_height="wrap_content"
 			android:orientation="vertical"
 			app:layout_constraintGuide_percent="0.5"/>
 
-</androidx.constraintlayout.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 <!--<LinearLayout-->
 		<!--xmlns:android="http://schemas.android.com/apk/res/android"-->
