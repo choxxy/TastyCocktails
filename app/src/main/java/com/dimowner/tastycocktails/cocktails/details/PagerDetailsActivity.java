@@ -5,16 +5,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import androidx.viewpager.widget.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
+
+import com.dimowner.tastycocktails.AdvHandler;
 import com.dimowner.tastycocktails.AppConstants;
 import com.dimowner.tastycocktails.R;
 import com.dimowner.tastycocktails.TCApplication;
@@ -23,7 +25,7 @@ import com.dimowner.tastycocktails.data.Prefs;
 import com.dimowner.tastycocktails.data.model.Drink;
 import com.dimowner.tastycocktails.util.AndroidUtils;
 import com.dimowner.tastycocktails.util.AnimationUtil;
-//import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -65,7 +67,7 @@ public class PagerDetailsActivity  extends AppCompatActivity {
 	private ImageButton btnFav;
 	private TextView txtInstructions;
 
-//	private AdvHandler advHandler;
+	private AdvHandler advHandler;
 
 	private DetailsPagerAdapter pagerAdapter;
 
@@ -213,8 +215,8 @@ public class PagerDetailsActivity  extends AppCompatActivity {
 			AndroidUtils.handleNavigationBarColor(this);
 		}
 
-//		AdView adView = findViewById(R.id.adView);
-//		advHandler = new AdvHandler(adView, prefs);
+		AdView adView = findViewById(R.id.adView);
+		advHandler = new AdvHandler(adView, prefs);
 	}
 
 	@Override
@@ -223,21 +225,21 @@ public class PagerDetailsActivity  extends AppCompatActivity {
 		compositeDisposable.clear();
 	}
 
-//	@Override
-//	public void onResume() {
-//		super.onResume();
-//		advHandler.onResume();
-//	}
-//
-//	@Override
-//	public void onPause() {
-//		advHandler.onPause();
-//		super.onPause();
-//	}
+	@Override
+	public void onResume() {
+		super.onResume();
+		advHandler.onResume();
+	}
+
+	@Override
+	public void onPause() {
+		advHandler.onPause();
+		super.onPause();
+	}
 
 	@Override
 	protected void onDestroy() {
-//		advHandler.onDestroy();
+		advHandler.onDestroy();
 		super.onDestroy();
 		compositeDisposable.dispose();
 	}

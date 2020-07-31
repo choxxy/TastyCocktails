@@ -16,20 +16,20 @@
 
 package com.dimowner.tastycocktails.data.room;
 
-import androidx.sqlite.db.SupportSQLiteQuery;
+
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.RawQuery;
 import androidx.room.Update;
+import androidx.sqlite.db.SupportSQLiteQuery;
 
 import java.util.List;
 
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 import com.dimowner.tastycocktails.data.model.Drink;
-import com.dimowner.tastycocktails.data.model.RatingDrink;
 
 /**
  * Created on 27.07.2017.
@@ -59,34 +59,18 @@ public interface CocktailsDao {
 	@Query("SELECT * FROM drinks WHERE UPPER(strAlcoholic) LIKE UPPER(:search) ORDER BY strDrink")
 	Flowable<List<Drink>> searchDrinksByAlcoholic(String search);
 
-	@Query("SELECT * FROM drinks WHERE strIngredient1 LIKE :ing1" +
-			" OR strIngredient2 LIKE :ing1" +
-			" OR strIngredient3 LIKE :ing1" +
-			" OR strIngredient4 LIKE :ing1" +
-			" OR strIngredient5 LIKE :ing1" +
-			" OR strIngredient6 LIKE :ing1" +
-			" OR strIngredient7 LIKE :ing1" +
-			" OR strIngredient8 LIKE :ing1" +
-			" OR strIngredient9 LIKE :ing1" +
-			" OR strIngredient10 LIKE :ing1" +
-			" OR strIngredient11 LIKE :ing1" +
-			" OR strIngredient12 LIKE :ing1" +
-			" ORDER BY RANDOM() LIMIT 1;")
-	Single<Drink> getRandomFiltered(String ing1);
-
-	@Query("SELECT * FROM drinks WHERE strIngredient1 LIKE :ing1" +
-			" OR strIngredient2 LIKE :ing1" +
-			" OR strIngredient3 LIKE :ing1" +
-			" OR strIngredient4 LIKE :ing1" +
-			" OR strIngredient5 LIKE :ing1" +
-			" OR strIngredient6 LIKE :ing1" +
-			" OR strIngredient7 LIKE :ing1" +
-			" OR strIngredient8 LIKE :ing1" +
-			" OR strIngredient9 LIKE :ing1" +
-			" OR strIngredient10 LIKE :ing1" +
-			" OR strIngredient11 LIKE :ing1" +
-			" OR strIngredient12 LIKE :ing1")
-	Single<List<Drink>> getFiltered(String ing1);
+	@Query("SELECT * FROM drinks WHERE UPPER(strIngredient1) LIKE UPPER(:search)" +
+			" OR UPPER(strIngredient2) LIKE UPPER(:search)" +
+			" OR UPPER(strIngredient3) LIKE UPPER(:search)" +
+			" OR UPPER(strIngredient4) LIKE UPPER(:search)" +
+			" OR UPPER(strIngredient5) LIKE UPPER(:search)" +
+			" OR UPPER(strIngredient6) LIKE UPPER(:search)" +
+			" OR UPPER(strIngredient7) LIKE UPPER(:search)" +
+			" OR UPPER(strIngredient8) LIKE UPPER(:search)" +
+			" OR UPPER(strIngredient9) LIKE UPPER(:search)" +
+			" OR UPPER(strIngredient10) LIKE UPPER(:search)" +
+			" ORDER BY strDrink")
+	Flowable<List<Drink>> searchDrinksByIngredient(String search);
 
 	@Query("SELECT * FROM drinks WHERE UPPER(strDrink) LIKE UPPER(:search) ORDER BY strDrink")
 	List<Drink> searchDrinks(String search);
@@ -144,15 +128,6 @@ public interface CocktailsDao {
 
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	void insertAllWithReplace(Drink... items);
-
-	@Insert(onConflict = OnConflictStrategy.REPLACE)
-	void insertRatingDrinks(RatingDrink... items);
-
-	@Query("SELECT * FROM rating ORDER BY likeCount DESC")
-	Flowable<List<RatingDrink>> getAllRatingDrinks();
-
-	@Query("DELETE FROM rating")
-	void deleteAllRatings();
 
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	void insertDrink(Drink item);

@@ -20,7 +20,6 @@
 		xmlns:app="http://schemas.android.com/apk/res-auto"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		xmlns:tools="http://schemas.android.com/tools"
 		android:background="@color/colorPrimary"
 		android:orientation="vertical">
 
@@ -55,33 +54,33 @@
 
 	</LinearLayout>
 
-	<!--<TextView-->
-			<!--android:id="@+id/showAdsLabel"-->
-			<!--style="@style/Text.NormalLabel"-->
-			<!--android:layout_width="wrap_content"-->
-			<!--android:layout_height="wrap_content"-->
-			<!--android:text="@string/show_ads"-->
-			<!--android:drawableLeft="@drawable/ic_round_stars_24px"-->
-			<!--android:drawableStart="@drawable/ic_round_stars_24px"-->
-			<!--android:layout_margin="@dimen/padding_standard"-->
-			<!--android:drawablePadding="@dimen/padding_double"-->
-			<!--app:layout_constraintStart_toStartOf="parent"-->
-			<!--app:layout_constraintBaseline_toBaselineOf="@id/showAdsSwitch"-->
-			<!--/>-->
+	<TextView
+			android:id="@+id/showAdsLabel"
+			style="@style/Text.NormalLabel"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/show_ads"
+			android:drawableLeft="@drawable/ic_round_stars_24px"
+			android:drawableStart="@drawable/ic_round_stars_24px"
+			android:layout_margin="@dimen/padding_standard"
+			android:drawablePadding="@dimen/padding_double"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintBaseline_toBaselineOf="@id/showAdsSwitch"
+			/>
 
-	<!--<android.support.v7.widget.SwitchCompat-->
-			<!--android:id="@+id/showAdsSwitch"-->
-			<!--android:layout_width="wrap_content"-->
-			<!--android:layout_height="wrap_content"-->
-			<!--android:layout_marginStart="@dimen/padding_standard"-->
-			<!--android:layout_marginEnd="@dimen/padding_standard"-->
-			<!--android:layout_marginLeft="@dimen/padding_standard"-->
-			<!--android:layout_marginRight="@dimen/padding_standard"-->
-			<!--android:paddingTop="@dimen/padding_standard"-->
-			<!--android:paddingBottom="@dimen/padding_standard"-->
-			<!--app:layout_constraintEnd_toEndOf="parent"-->
-			<!--app:layout_constraintTop_toBottomOf="@+id/toolbar"-->
-			<!--/>-->
+	<androidx.appcompat.widget.SwitchCompat
+			android:id="@+id/showAdsSwitch"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/padding_standard"
+			android:layout_marginEnd="@dimen/padding_standard"
+			android:layout_marginLeft="@dimen/padding_standard"
+			android:layout_marginRight="@dimen/padding_standard"
+			android:paddingTop="@dimen/padding_standard"
+			android:paddingBottom="@dimen/padding_standard"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/toolbar"
+			/>
 
 	<TextView
 			android:id="@+id/btnLicences"
@@ -92,13 +91,11 @@
 			android:drawableLeft="@drawable/dna"
 			android:drawableStart="@drawable/dna"
 			android:background="?attr/selectableItemBackgroundBorderless"
-			android:clickable="true"
-			android:focusable="true"
 			android:padding="@dimen/padding_small"
 			android:layout_margin="@dimen/padding_small"
 			android:drawablePadding="@dimen/padding_double"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/toolbar"
+			app:layout_constraintTop_toBottomOf="@+id/showAdsSwitch"
 			/>
 
 	<TextView
@@ -110,8 +107,6 @@
 			android:drawableLeft="@drawable/ic_round_thumbs_up_down_24px"
 			android:drawableStart="@drawable/ic_round_thumbs_up_down_24px"
 			android:background="?attr/selectableItemBackgroundBorderless"
-			android:clickable="true"
-			android:focusable="true"
 			android:padding="@dimen/padding_small"
 			android:layout_margin="@dimen/padding_small"
 			android:drawablePadding="@dimen/padding_double"
@@ -120,102 +115,30 @@
 			/>
 
 	<TextView
-			android:id="@+id/btnRequest"
+			android:id="@+id/btnAbout"
 			style="@style/Text.NormalLabel"
-			android:layout_width="match_parent"
+			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="@string/request"
-			android:drawableStart="@drawable/ic_chat_bubble"
-			android:drawableLeft="@drawable/ic_chat_bubble"
-			android:background="?android:selectableItemBackground"
-			android:padding="@dimen/padding_standard"
+			android:text="@string/nav_about"
+			android:drawableLeft="@drawable/round_info_white"
+			android:drawableStart="@drawable/round_info_white"
+			android:background="?attr/selectableItemBackgroundBorderless"
+			android:padding="@dimen/padding_small"
+			android:layout_margin="@dimen/padding_small"
 			android:drawablePadding="@dimen/padding_double"
+			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@+id/btnRate"
 			/>
 
-	<TextView
-			android:id="@+id/txtAbout"
-			style="@style/Text.NormalLabel"
+
+	<com.google.android.gms.ads.AdView
+			android:id="@+id/adView"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:text="@string/app_name"
-			android:gravity="bottom|center"
-			android:textSize="@dimen/text_size_xmedium"
-			android:background="?attr/selectableItemBackgroundBorderless"
-			android:padding="@dimen/padding_standard"
-			android:drawablePadding="@dimen/padding_double"
-			android:clickable="true"
-			android:focusable="true"
-			tools:text="About"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/btnRequest"
-			/>
-
-	<!--<com.google.android.gms.ads.AdView-->
-			<!--android:id="@+id/adView"-->
-			<!--android:layout_width="match_parent"-->
-			<!--android:layout_height="wrap_content"-->
-			<!--android:layout_gravity="center_horizontal"-->
-			<!--android:visibility="gone"-->
-			<!--app:adSize="SMART_BANNER"-->
-			<!--app:adUnitId="@string/bottom_banner_id"-->
-			<!--app:layout_constraintBottom_toBottomOf="parent" />-->
-
-	<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			app:layout_constraintHorizontal_weight="1"
-			android:text="@string/checkout_apps"
-			android:textColor="@color/text_secondary_light"
-			android:textSize="@dimen/text_size_xmedium"
-			android:textStyle="bold"
-			android:background="@color/colorPrimaryDark"
-			android:paddingStart="@dimen/padding_standard"
-			android:paddingEnd="@dimen/padding_standard"
-			android:paddingTop="@dimen/padding_small"
-			android:paddingBottom="@dimen/padding_tiny"
-			android:gravity="start"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintBottom_toTopOf="@+id/btnAudioRecorder"
-			/>
-
-	<TextView
-			android:id="@+id/btnAudioRecorder"
-			style="@style/Text.NormalLabel"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			app:layout_constraintHorizontal_weight="1"
-			android:text="@string/app_audio_recorder"
-			android:drawableLeft="@drawable/audio_recorder_logo"
-			android:drawableStart="@drawable/audio_recorder_logo"
-			android:background="@color/colorPrimaryDark"
-			android:clickable="true"
-			android:focusable="true"
-			android:padding="@dimen/padding_standard"
-			android:drawablePadding="@dimen/padding_standard"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintEnd_toStartOf="@id/btnAiryCompass"
-			app:layout_constraintBottom_toBottomOf="parent"
-			/>
-
-	<TextView
-			android:id="@+id/btnAiryCompass"
-			style="@style/Text.NormalLabel"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			app:layout_constraintHorizontal_weight="1"
-			android:text="@string/app_airy_compass"
-			android:drawableLeft="@drawable/ic_launcher3"
-			android:drawableStart="@drawable/ic_launcher3"
-			android:background="@color/colorPrimaryDark"
-			android:clickable="true"
-			android:focusable="true"
-			android:padding="@dimen/padding_standard"
-			android:drawablePadding="@dimen/padding_standard"
-			app:layout_constraintStart_toEndOf="@id/btnAudioRecorder"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintBottom_toBottomOf="parent"
-			/>
+			android:layout_gravity="center_horizontal"
+			android:visibility="gone"
+			app:adSize="SMART_BANNER"
+			app:adUnitId="@string/bottom_banner_id"
+			app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

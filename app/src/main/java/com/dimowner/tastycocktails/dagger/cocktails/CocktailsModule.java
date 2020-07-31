@@ -16,8 +16,9 @@
 
 package com.dimowner.tastycocktails.dagger.cocktails;
 
-import androidx.lifecycle.ViewModelProviders;
+
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import dagger.Module;
 import dagger.Provides;

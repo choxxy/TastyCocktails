@@ -16,9 +16,11 @@
 
 package com.dimowner.tastycocktails;
 
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -26,37 +28,25 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.view.Gravity;
 import android.view.View;
 
 import com.dimowner.tastycocktails.cocktails.CocktailsListFragment;
 
 import com.dimowner.tastycocktails.data.Prefs;
-import com.dimowner.tastycocktails.data.Repository;
-import com.dimowner.tastycocktails.data.model.Drink;
-import com.dimowner.tastycocktails.data.model.Drinks;
 import com.dimowner.tastycocktails.random.RandomFragment;
-import com.dimowner.tastycocktails.rating.RatingFragment;
 import com.dimowner.tastycocktails.settings.SettingsActivity;
 import com.dimowner.tastycocktails.util.AndroidUtils;
-import com.dimowner.tastycocktails.welcome.WelcomeFragment;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.navigation.NavigationView;
-import com.google.gson.Gson;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.Single;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 /**
@@ -68,7 +58,6 @@ public class NavigationActivity extends AppCompatActivity implements DialogInter
 	// symbols for navdrawer items (indices must correspond to array below). This is
 	// not a list of items that are necessarily *present* in the Nav Drawer; rather,
 	// it's a list of all possible items.
-	protected static final int NAVDRAWER_ITEM_RATING      = R.id.nav_rating;
 	protected static final int NAVDRAWER_ITEM_FAVORITES   = R.id.nav_favorites;
 	protected static final int NAVDRAWER_ITEM_COCKTAILS	= R.id.nav_cocktails;
 	protected static final int NAVDRAWER_ITEM_RANDOM 		= R.id.nav_random;
@@ -89,18 +78,20 @@ public class NavigationActivity extends AppCompatActivity implements DialogInter
 
 	private int curActiveItem = NAVDRAWER_ITEM_COCKTAILS;
 
-	private Disposable disposable = null;
-
-	@Inject Repository repository;
+//	private AppStartTracker tracker;
 
 	@Inject Prefs prefs;
 
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
+//		tracker = TCApplication.getAppStartTracker(getApplicationContext());
+//		tracker.activityOnCreate();
 		setTheme(R.style.AppTheme_TransparentStatusBar);
 		super.onCreate(savedInstanceState);
+//		tracker.activityContentViewBefore();
 		setContentView(R.layout.base_nav_activity);
+//		tracker.activityContentViewAfter();
 
 		TCApplication.get(getApplicationContext()).applicationComponent().inject(this);
 
@@ -109,104 +100,43 @@ public class NavigationActivity extends AppCompatActivity implements DialogInter
 			mActionBarToolbar.setPadding(0, AndroidUtils.getStatusBarHeight(getApplicationContext()), 0, 0);
 		}
 
-		if (prefs.isFirstRun()) {
+		if (savedInstanceState == null) {
 			FragmentManager manager = getSupportFragmentManager();
-			WelcomeFragment fragment = WelcomeFragment.newInstance();
-			fragment.setOnFirstRunExecutedListener(() -> {
-				enableMenu();
-				startCocktails();
-			});
-			FragmentTransaction ft = manager.beginTransaction();
-			ft.add(R.id.fragment, fragment, "welcome_fragment");
-			ft.commit();
-			AndroidUtils.primaryColorNavigationBar(this);
-		} else {
-			if (savedInstanceState == null) {
-				FragmentManager manager = getSupportFragmentManager();
-				CocktailsListFragment fragment = CocktailsListFragment.newInstance(CocktailsListFragment.TYPE_NORMAL);
-				if (prefs.isFirstRun()) {
-					fragment.setOnFirstRunExecutedListener(this::enableMenu);
-				}
-				manager
-						.beginTransaction()
-						.add(R.id.fragment, fragment, "cocktails_fragment")
-						.commit();
-
-				AndroidUtils.handleNavigationBarColor(this);
+			CocktailsListFragment fragment = CocktailsListFragment.newInstance(CocktailsListFragment.TYPE_NORMAL);
+			if (prefs.isFirstRun()) {
+				fragment.setOnFirstRunExecutedListener(this::enableMenu);
 			}
+			manager
+					.beginTransaction()
+					.add(R.id.fragment, fragment, "cocktails_fragment")
+					.commit();
+
+			AndroidUtils.handleNavigationBarColor(this);
 		}
 		setupNavDrawer();
 		if (prefs.isFirstRun()) {
 			disableMenu();
 		}
 
-		if (!prefs.isDrinksCached() && !prefs.isCacheFailed()) {
-			disposable = firstRunInitialization()
-					.subscribe(drinks1 -> {
-						Timber.d("Succeed to cache %d drinks!", drinks1.length);
-						if (drinks1.length > 0) {
-							prefs.setDrinksCached();
-						} else {
-							prefs.setCacheFailed();
-						}
-					}, Timber::e);
-		}
-
-//		MobileAds.initialize(getApplicationContext(), getResources().getString(R.string.ad_mob_id));
+		MobileAds.initialize(getApplicationContext(), getResources().getString(R.string.ad_mob_id));
+//		tracker.activityOnCreateEnd();
 	}
 
-	public Single<Drink[]> firstRunInitialization() {
-		String json;
-		try {
-			InputStream is = getAssets().open("drinks_json.txt");
-			int size = is.available();
-			byte[] buffer = new byte[size];
-			is.read(buffer);
-			is.close();
-			json = new String(buffer, "UTF-8");
-
-			Gson gson = new Gson();
-			Drinks drinks = gson.fromJson(json, Drinks.class);
-			List<Drink> cachedFev = new ArrayList<>();
-			return repository.getFavoritesCount()
-					.subscribeOn(Schedulers.io())
-					.flatMap(count -> {
-						if (count > 0) {
-							cachedFev.addAll(repository.getFavoritesDrinks());
-							repository.clearAll();
-							return repository.cacheIntoLocalDatabase(drinks)
-									.doOnSuccess(v -> {
-										for (int i = 0; i < cachedFev.size(); i++) {
-											repository.reverseFavorite(cachedFev.get(i).getIdDrink())
-													.subscribeOn(Schedulers.io())
-													.subscribe();
-										}
-									});
-						} else {
-							repository.clearAll();
-							return repository.cacheIntoLocalDatabase(drinks);
-						}
-					});
-		} catch (IOException ex) {
-			Timber.e(ex);
-			return Single.error(ex);
-		}
-	}
+//	@Override
+//	protected void onStart() {
+//		super.onStart();
+//		tracker.activityOnStart();
+//	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
+//		tracker.activityOnResume();
+//		Timber.v(tracker.getResults());
 		if (getSelfNavDrawerItem() > NAVDRAWER_ITEM_INVALID) {
 			mNavigationView.getMenu().findItem(getSelfNavDrawerItem()).setChecked(true);
 		}
-	}
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		if (disposable != null) {
-			disposable.dispose();
-		}
+//		Toast.makeText(getApplicationContext(), tracker.getStartTime(), Toast.LENGTH_LONG).show();
 	}
 
 	@Override
@@ -285,23 +215,17 @@ public class NavigationActivity extends AppCompatActivity implements DialogInter
 
 	private void disableMenu() {
 		if (mNavigationView != null) {
-			mNavigationView.getMenu().findItem(R.id.nav_rating).setEnabled(false);
-			mNavigationView.getMenu().findItem(R.id.nav_cocktails).setEnabled(false);
 			mNavigationView.getMenu().findItem(R.id.nav_favorites).setEnabled(false);
 			mNavigationView.getMenu().findItem(R.id.nav_history).setEnabled(false);
 			mNavigationView.getMenu().findItem(R.id.nav_random).setEnabled(false);
-			mNavigationView.getMenu().findItem(R.id.nav_settings).setEnabled(false);
 		}
 	}
 
 	private void enableMenu() {
 		if (mNavigationView != null) {
-			mNavigationView.getMenu().findItem(R.id.nav_rating).setEnabled(true);
-			mNavigationView.getMenu().findItem(R.id.nav_cocktails).setEnabled(true);
 			mNavigationView.getMenu().findItem(R.id.nav_favorites).setEnabled(true);
 			mNavigationView.getMenu().findItem(R.id.nav_history).setEnabled(true);
 			mNavigationView.getMenu().findItem(R.id.nav_random).setEnabled(true);
-			mNavigationView.getMenu().findItem(R.id.nav_settings).setEnabled(true);
 		}
 	}
 
@@ -316,13 +240,6 @@ public class NavigationActivity extends AppCompatActivity implements DialogInter
 
 	private void goToNavDrawerItem(int itemID) {
 		switch (itemID) {
-			case NAVDRAWER_ITEM_RATING:
-				if (mActionBarToolbar.getVisibility() == View.GONE) {
-					mActionBarToolbar.setVisibility(View.VISIBLE);
-				}
-				startRating();
-				curActiveItem = NAVDRAWER_ITEM_RATING;
-				break;
 			case NAVDRAWER_ITEM_FAVORITES:
 				if (mActionBarToolbar.getVisibility() == View.GONE) {
 					mActionBarToolbar.setVisibility(View.VISIBLE);
@@ -366,19 +283,54 @@ public class NavigationActivity extends AppCompatActivity implements DialogInter
 		}
 	}
 
+	public void rateApp() {
+		try {
+			Intent rateIntent = rateIntentForUrl("market://details");
+			startActivity(rateIntent);
+		} catch (ActivityNotFoundException e) {
+			Intent rateIntent = rateIntentForUrl("https://play.google.com/store/apps/details");
+			startActivity(rateIntent);
+		}
+	}
+
+	private Intent rateIntentForUrl(String url) {
+		Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(String.format("%s?id=%s", url, getPackageName())));
+		int flags = Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_MULTIPLE_TASK;
+		if (Build.VERSION.SDK_INT >= 21) {
+			flags |= Intent.FLAG_ACTIVITY_NEW_DOCUMENT;
+		} else {
+			flags |= Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET;
+		}
+		intent.addFlags(flags);
+		return intent;
+	}
+
+	public void openFeedback() {
+		Intent localIntent = new Intent(Intent.ACTION_SEND);
+		localIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{AppConstants.FEEDBACK_EMAIL});
+		localIntent.putExtra(Intent.EXTRA_CC, "");
+		String str;
+		try {
+			str = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+			localIntent.putExtra(Intent.EXTRA_SUBJECT, AppConstants.FEEDBACK_SUBJECT);
+			localIntent.putExtra(Intent.EXTRA_TEXT,
+							"\n\n----------------------------------\n Device OS: Android " + Build.VERSION.RELEASE
+							+ "\n App Version: " + str
+							+ "\n Device Brand: " + Build.BRAND + " " + Build.MODEL
+							+ "\n Device Manufacturer: " + Build.MANUFACTURER);
+			localIntent.setType("message/rfc822");
+			startActivity(Intent.createChooser(localIntent, "Choose an Email client :"));
+		} catch (Exception e) {
+			Timber.e(e);
+		}
+	}
+
 	public boolean isDirectionToLeft(int id) {
 		switch (id) {
-			case NAVDRAWER_ITEM_RATING:
-				return true;
 			case NAVDRAWER_ITEM_COCKTAILS:
-				if (curActiveItem == NAVDRAWER_ITEM_RATING) {
-					return false;
-				} else {
-					return true;
-				}
+				return true;
 			case NAVDRAWER_ITEM_FAVORITES:
-				if ((curActiveItem == NAVDRAWER_ITEM_RATING)
-						|| (curActiveItem == NAVDRAWER_ITEM_COCKTAILS)) {
+				if (curActiveItem == NAVDRAWER_ITEM_COCKTAILS) {
 					return false;
 				} else {
 					return true;
@@ -408,7 +360,6 @@ public class NavigationActivity extends AppCompatActivity implements DialogInter
 		}
 		ft.replace(R.id.fragment, fragment, "favorites_fragment");
 		ft.commit();
-		AndroidUtils.handleNavigationBarColor(this);
 	}
 
 	protected void startHistory() {
@@ -423,22 +374,6 @@ public class NavigationActivity extends AppCompatActivity implements DialogInter
 		}
 		ft.replace(R.id.fragment, fragment, "history_fragment");
 		ft.commit();
-		AndroidUtils.handleNavigationBarColor(this);
-	}
-
-	protected void startRating() {
-		Timber.d("startRating");
-		FragmentManager manager = getSupportFragmentManager();
-		RatingFragment fragment = RatingFragment.newInstance();
-		FragmentTransaction ft = manager.beginTransaction();
-		if (isDirectionToLeft(NAVDRAWER_ITEM_COCKTAILS)) {
-			ft.setCustomAnimations(R.anim.enter_left_to_right, R.anim.exit_right_to_left);
-		} else {
-			ft.setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_left_to_right);
-		}
-		ft.replace(R.id.fragment, fragment, "rating_fragment");
-		ft.commit();
-		AndroidUtils.blackNavigationBar(this);
 	}
 
 	protected void startCocktails() {
@@ -453,7 +388,6 @@ public class NavigationActivity extends AppCompatActivity implements DialogInter
 		}
 		ft.replace(R.id.fragment, fragment, "cocktails_fragment");
 		ft.commit();
-		AndroidUtils.handleNavigationBarColor(this);
 	}
 
 	protected void startRandom() {
@@ -469,8 +403,19 @@ public class NavigationActivity extends AppCompatActivity implements DialogInter
 		}
 		ft.replace(R.id.fragment, fragment, RandomFragment.TAG);
 		ft.commit();
-		AndroidUtils.handleNavigationBarColor(this);
 	}
+
+//	private void showAboutDialog() {
+//		FragmentManager fm = getSupportFragmentManager();
+//		FragmentTransaction ft = fm.beginTransaction();
+//		Fragment prev = fm.findFragmentByTag("dialog_about");
+//		if (prev != null) {
+//			ft.remove(prev);
+//		}
+//		ft.addToBackStack(null);
+//		AboutDialog dialog = new AboutDialog();
+//		dialog.show(ft, "dialog_about");
+//	}
 
 	private void startSettings() {
 		startActivity(new Intent(getApplicationContext(), SettingsActivity.class));

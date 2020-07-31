@@ -16,17 +16,17 @@
 
 package com.dimowner.tastycocktails.data.room;
 
+
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
 
 import com.dimowner.tastycocktails.data.model.Drink;
-import com.dimowner.tastycocktails.data.model.RatingDrink;
 
 /**
  * Created on 27.07.2017.
  * @author Dimowner
  */
-@Database(entities = {Drink.class, RatingDrink.class}, version = 7, exportSchema = false)
+@Database(entities = {Drink.class}, version = 6, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
 	public static final int DEFAULT_PER_PAGE = 50;

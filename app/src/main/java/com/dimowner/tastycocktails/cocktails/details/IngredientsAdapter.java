@@ -19,11 +19,13 @@ package com.dimowner.tastycocktails.cocktails.details;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +56,6 @@ public class IngredientsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 	private static final int VIEW_TYPE_HEADER = 1;
 	private static final int VIEW_TYPE_NORMAL = 2;
 	private static final int VIEW_TYPE_FOOTER = 3;
-	private static final int VIEW_TYPE_FOOTER2 = 4;
 
 	private boolean isInMultiWindow = false;
 
@@ -68,8 +69,6 @@ public class IngredientsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 	private String glass;
 
 	private boolean showProgress = false;
-
-	private boolean showFooter2 = false;
 
 	private HeaderViewHolder headerViewHolder;
 
@@ -241,7 +240,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 					.listener(new RequestListener<Drawable>() {
 						@Override
 						public boolean onLoadFailed(@Nullable GlideException e, Object model,
-															 Target<Drawable> target, boolean isFirstResource) {
+													Target<Drawable> target, boolean isFirstResource) {
 							if (animationListener != null) {
 								animationListener.onAnimation();
 							}
@@ -288,13 +287,6 @@ public class IngredientsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 		}
 	}
 
-	@Override
-	public void showEmptyDrink() {
-		if (onSnackBarListener != null) {
-			onSnackBarListener.showAlertDialog(R.string.cant_find_drink_with_ingredient);
-		}
-	}
-
 	@NonNull
 	@Override
 	public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -306,10 +298,6 @@ public class IngredientsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 		} else if (viewType == VIEW_TYPE_FOOTER) {
 			View v = LayoutInflater.from(parent.getContext())
 					.inflate(R.layout.list_item_details_footer, parent, false);
-			return new FooterViewHolder(v);
-		} else if (viewType == VIEW_TYPE_FOOTER2) {
-			View v = LayoutInflater.from(parent.getContext())
-					.inflate(R.layout.list_item_footer2, parent, false);
 			return new FooterViewHolder(v);
 		} else {
 //	   if (viewType == VIEW_TYPE_NORMAL) {
@@ -394,7 +382,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 		if (mShowingData.size() == 0) {
 			return 1;
 		} else {
-			return mShowingData.size() + 2 + (showFooter2 ? 1 : 0);
+			return mShowingData.size() + 2;
 		}
 	}
 
@@ -404,19 +392,8 @@ public class IngredientsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 			return VIEW_TYPE_HEADER;
 		} else if (position == mShowingData.size()+1) {
 			return VIEW_TYPE_FOOTER;
-		} else if (position == mShowingData.size()+2) {
-			return VIEW_TYPE_FOOTER2;
 		}
 		return VIEW_TYPE_NORMAL;
-	}
-
-	public void showBottomPanelMargin(boolean b) {
-		showFooter2 = b;
-		if (b) {
-			notifyItemInserted(mShowingData.size() + 1);
-		} else {
-			notifyItemRemoved(mShowingData.size() + 1);
-		}
 	}
 
 	public IngredientItem getItem(int pos) {
@@ -504,6 +481,5 @@ public class IngredientsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
 	public interface OnSnackBarListener {
 		void showSnackBar(String message);
-		void showAlertDialog(int resId);
 	}
 }

@@ -17,9 +17,11 @@
 package com.dimowner.tastycocktails.cocktails;
 
 import android.app.Application;
-import androidx.lifecycle.AndroidViewModel;
 import android.content.Context;
-import android.support.annotation.NonNull;
+
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -186,11 +188,11 @@ public class CocktailsListPresenter extends AndroidViewModel implements Cocktail
 //	}
 
 	@Override
-	public void loadFilteredList(String category, List<String> ingredients, String glass, String alcoholic) {
+	public void loadFilteredList(String category, String ingredient, String glass, String alcoholic) {
 		view.showProgress();
 		compositeDisposable.clear();
 		compositeDisposable.add(
-				repository.loadFilteredDrinks2(category, ingredients, glass, alcoholic)
+				repository.loadFilteredDrinks(category, ingredient, glass, alcoholic)
 						.map(ModelMapper::drinksToListItems)
 						.subscribeOn(Schedulers.io())
 						.observeOn(AndroidSchedulers.mainThread())

@@ -17,18 +17,18 @@
 package com.dimowner.tastycocktails.licences;
 
 import android.content.Intent;
-
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.dimowner.tastycocktails.R;
 import com.dimowner.tastycocktails.TCApplication;
-import com.dimowner.tastycocktails.analytics.MixPanel;
 import com.dimowner.tastycocktails.util.AndroidUtils;
 
 /**
@@ -58,7 +58,6 @@ public class LicenceActivity extends AppCompatActivity {
 		if (savedInstanceState == null) {
 			AndroidUtils.handleNavigationBarColor(this);
 		}
-		TCApplication.event(getApplicationContext(), MixPanel.EVENT_LICENCES);
 	}
 
 	@Override

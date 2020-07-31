@@ -17,8 +17,10 @@
 package com.dimowner.tastycocktails.random;
 
 import android.app.Application;
+
+
+import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import android.support.annotation.NonNull;
 
 import java.util.List;
 
@@ -116,21 +118,13 @@ public class RandomPresenter extends AndroidViewModel implements RandomContract.
 	}
 
 	@Override
-	public void loadRandomDrink(List<String> ingredients) {
+	public void loadRandomDrink() {
 		view.showProgress();
 		compositeDisposable.add(
-//				repository.getRandomCocktail()
-				repository.getRandomCocktail(ingredients)
+				repository.getRandomCocktail()
 						.subscribeOn(Schedulers.io())
 						.observeOn(AndroidSchedulers.mainThread())
-						.subscribe(d -> {
-							if (d.isEmpty()) {
-								view.showEmptyDrink();
-								view.hideProgress();
-							} else {
-								displayData(d);
-							}
-						}, this::handleError));
+						.subscribe(this::displayData, this::handleError));
 	}
 
 	private void displayData(Drink model) {

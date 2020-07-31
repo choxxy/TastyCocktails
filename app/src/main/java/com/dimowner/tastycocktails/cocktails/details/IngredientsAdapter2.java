@@ -18,11 +18,12 @@ package com.dimowner.tastycocktails.cocktails.details;
 
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -245,7 +246,7 @@ public class IngredientsAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewH
 					.listener(new RequestListener<Drawable>() {
 						@Override
 						public boolean onLoadFailed(@Nullable GlideException e, Object model,
-															 Target<Drawable> target, boolean isFirstResource) {
+													Target<Drawable> target, boolean isFirstResource) {
 							if (animationListener != null) {
 								animationListener.onAnimation();
 							}

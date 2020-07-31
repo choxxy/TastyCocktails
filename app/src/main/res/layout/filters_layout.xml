@@ -1,70 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
+<androidx.cardview.widget.CardView
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:tools="http://schemas.android.com/tools"
-		xmlns:app="http://schemas.android.com/apk/res-auto"
+		xmlns:card_view="http://schemas.android.com/apk/res-auto"
 		android:background="@color/white"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginTop="@dimen/padding_tiny"
-		android:layout_marginBottom="@dimen/padding_double"
-		android:layout_marginStart="@dimen/padding_zero"
-		android:layout_marginEnd="@dimen/padding_zero"
-		android:paddingBottom="@dimen/padding_small"
-		app:cardElevation="@dimen/panel_elevation"
-		app:cardCornerRadius="@dimen/panel_corner_radius">
+		android:layout_margin="@dimen/padding_small"
+		android:elevation="@dimen/under_toolbar_elevation"
+		card_view:cardCornerRadius="8dp">
 
 <LinearLayout
 		android:id="@+id/filters_panel"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:paddingStart="@dimen/padding_standard"
-		android:paddingEnd="@dimen/padding_standard"
+		android:padding="@dimen/padding_standard"
 		android:orientation="vertical"
 		tools:visibility="visible">
 
 	<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:gravity="start"
-			android:orientation="horizontal">
-
-		<Button
-				style="?android:attr/buttonBarButtonStyle"
-				android:id="@+id/btn_close"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:visibility="gone"
-				android:text="@string/btn_close"/>
-		<Button
-				style="?android:attr/buttonBarButtonStyle"
-				android:id="@+id/btn_clear"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="@string/btn_clear"/>
-
-		<TextView
-				android:id="@+id/txtFiltersInstructions"
-				android:layout_width="0dp"
-				android:layout_height="wrap_content"
-				android:layout_weight="1"
-				android:drawableStart="@drawable/round_info_light_grey"
-				android:drawableLeft="@drawable/round_info_light_grey"
-				android:drawablePadding="@dimen/padding_small"
-				android:paddingStart="@dimen/padding_standard"
-				android:paddingEnd="@dimen/padding_standard"
-				android:layout_gravity="start|center"
-				android:visibility="gone"
-				android:text="@string/pull_to_close"
-				android:textColor="@color/light_grey"
-				android:textSize="@dimen/text_size_medium"
-				/>
-
-	</LinearLayout>
-
-	<LinearLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
+			android:paddingBottom="@dimen/padding_medium"
 			android:orientation="horizontal">
 
 		<TextView
@@ -85,7 +42,28 @@
 	<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:paddingTop="@dimen/padding_tiny"
+			android:paddingBottom="@dimen/padding_medium"
+			android:orientation="horizontal">
+
+		<TextView
+				android:layout_width="@dimen/filters_label_width"
+				android:layout_height="wrap_content"
+				android:fontFamily="@font/product_sans_regular"
+				android:textSize="@dimen/text_size_xmedium"
+				android:text="@string/ingredient"
+				/>
+
+		<Spinner
+				android:id="@+id/filter_ingredients"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				/>
+	</LinearLayout>
+
+	<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:paddingBottom="@dimen/padding_medium"
 			android:orientation="horizontal">
 
 		<TextView
@@ -106,7 +84,6 @@
 	<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:paddingTop="@dimen/padding_tiny"
 			android:orientation="horizontal">
 
 		<TextView
@@ -127,77 +104,38 @@
 	<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:paddingTop="@dimen/padding_tiny"
+			android:gravity="end"
 			android:orientation="horizontal">
 
 		<TextView
-				android:layout_width="@dimen/filters_label_width"
-				android:layout_height="wrap_content"
-				android:fontFamily="@font/product_sans_regular"
-				android:textSize="@dimen/text_size_xmedium"
-				android:text="@string/ingredient"
-				/>
-
-		<Spinner
-				android:id="@+id/filter_ingredients"
+				android:id="@+id/txtFiltersInstructions"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:layout_weight="1"
+				android:drawableStart="@drawable/round_info_light_grey"
+				android:drawableLeft="@drawable/round_info_light_grey"
+				android:drawablePadding="@dimen/padding_small"
+				android:layout_gravity="start|center"
+				android:visibility="gone"
+				android:padding="@dimen/padding_small"
+				android:text="@string/pull_to_close"
+				android:textColor="@color/light_grey"
+				android:textSize="@dimen/text_size_medium"
 				/>
+
+		<Button
+				style="?android:attr/buttonBarButtonStyle"
+				android:id="@+id/btn_close"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/btn_close"/>
+		<Button
+				style="?android:attr/buttonBarButtonStyle"
+				android:id="@+id/btn_clear"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/btn_clear"/>
 	</LinearLayout>
-
-	<LinearLayout
-			android:id="@+id/pnl_ingredient2"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:paddingTop="@dimen/padding_tiny"
-			android:orientation="horizontal"
-			tools:visibility="visible"
-			>
-
-		<TextView
-				android:layout_width="@dimen/filters_label_width"
-				android:layout_height="wrap_content"
-				android:fontFamily="@font/product_sans_regular"
-				android:textSize="@dimen/text_size_xmedium"
-				android:text="@string/ingredient"
-				/>
-
-		<Spinner
-				android:id="@+id/filter_ingredients2"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				/>
-	</LinearLayout>
-
-	<LinearLayout
-			android:id="@+id/pnl_ingredient3"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:paddingTop="@dimen/padding_tiny"
-			android:orientation="horizontal"
-			android:visibility="gone"
-			tools:visibility="visible"
-			>
-
-		<TextView
-				android:layout_width="@dimen/filters_label_width"
-				android:layout_height="wrap_content"
-				android:fontFamily="@font/product_sans_regular"
-				android:textSize="@dimen/text_size_xmedium"
-				android:text="@string/ingredient"
-				/>
-
-		<Spinner
-				android:id="@+id/filter_ingredients3"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				/>
-	</LinearLayout>
-
-	<View
-			android:layout_width="wrap_content"
-			android:layout_height="@dimen/panel_padding" />
 
 </LinearLayout>
-</android.support.v7.widget.CardView>
+</androidx.cardview.widget.CardView>

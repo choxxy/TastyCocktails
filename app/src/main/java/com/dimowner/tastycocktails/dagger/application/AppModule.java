@@ -16,12 +16,14 @@
 
 package com.dimowner.tastycocktails.dagger.application;
 
-import androidx.sqlite.db.SupportSQLiteDatabase;
+
+import android.content.Context;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 import androidx.room.Room;
 import androidx.room.migration.Migration;
-import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.VisibleForTesting;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import javax.inject.Singleton;
 
@@ -29,7 +31,6 @@ import dagger.Module;
 import dagger.Provides;
 
 import com.dimowner.tastycocktails.FirebaseHandler;
-import com.dimowner.tastycocktails.analytics.MixPanel;
 import com.dimowner.tastycocktails.data.LocalRepository;
 import com.dimowner.tastycocktails.data.Prefs;
 import com.dimowner.tastycocktails.data.RemoteRepository;
@@ -76,11 +77,6 @@ public class AppModule {
 		return new Repository(localRepository, remoteRepository);
 	}
 
-	@Provides
-	@Singleton
-	MixPanel provideMixPanel() {
-		return new MixPanel();
-	}
 
 	@Provides
 	@Singleton
@@ -88,7 +84,6 @@ public class AppModule {
 		return Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "cocktails_db")
 //				.fallbackToDestructiveMigration()
 				.addMigrations(MIGRATION_4_6)
-				.addMigrations(MIGRATION_6_7)
 				.build();
 	}
 
@@ -116,58 +111,6 @@ public class AppModule {
 		public void migrate(@NonNull SupportSQLiteDatabase database) {
 			//Migration code here
 			database.execSQL("ALTER TABLE 'drinks' ADD COLUMN 'cached' INTEGER NOT NULL DEFAULT 0");
-		}
-	};
-
-	/**
-	 * Migrate from:
-	 * version 6 - using the SQLiteDatabase API
-	 * to
-	 * version 7 - using Room
-	 */
-	@VisibleForTesting
-	static final Migration MIGRATION_6_7 = new Migration(6, 7) {
-		@Override
-		public void migrate(@NonNull SupportSQLiteDatabase database) {
-			database.execSQL("CREATE TABLE `rating` (`idDrink` INTEGER NOT NULL, "
-					+ " `likeCount` INTEGER NOT NULL DEFAULT 0,"
-					+ " `strDrink` TEXT,"
-					+ " `strCategory` TEXT,"
-					+ " `strAlcoholic` TEXT,"
-					+ " `strGlass` TEXT,"
-					+ " `strInstructions` TEXT,"
-					+ " `strDrinkThumb` TEXT,"
-					+ " `strIngredient1` TEXT,"
-					+ " `strIngredient2` TEXT,"
-					+ " `strIngredient3` TEXT,"
-					+ " `strIngredient4` TEXT,"
-					+ " `strIngredient5` TEXT,"
-					+ " `strIngredient6` TEXT,"
-					+ " `strIngredient7` TEXT,"
-					+ " `strIngredient8` TEXT,"
-					+ " `strIngredient9` TEXT,"
-					+ " `strIngredient10` TEXT,"
-					+ " `strIngredient11` TEXT,"
-					+ " `strIngredient12` TEXT,"
-					+ " `strIngredient13` TEXT,"
-					+ " `strIngredient14` TEXT,"
-					+ " `strIngredient15` TEXT,"
-					+ " `strMeasure1` TEXT,"
-					+ " `strMeasure2` TEXT,"
-					+ " `strMeasure3` TEXT,"
-					+ " `strMeasure4` TEXT,"
-					+ " `strMeasure5` TEXT,"
-					+ " `strMeasure6` TEXT,"
-					+ " `strMeasure7` TEXT,"
-					+ " `strMeasure8` TEXT,"
-					+ " `strMeasure9` TEXT,"
-					+ " `strMeasure10` TEXT,"
-					+ " `strMeasure11` TEXT,"
-					+ " `strMeasure12` TEXT,"
-					+ " `strMeasure13` TEXT,"
-					+ " `strMeasure14` TEXT,"
-					+ " `strMeasure15` TEXT,"
-					+ " PRIMARY KEY(`idDrink`))");
 		}
 	};
 }

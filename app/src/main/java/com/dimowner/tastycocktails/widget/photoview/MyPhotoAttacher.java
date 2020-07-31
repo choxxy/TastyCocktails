@@ -19,12 +19,14 @@
 
 package com.dimowner.tastycocktails.widget.photoview;
 
-import android.support.animation.DynamicAnimation;
-import android.support.animation.SpringAnimation;
-import android.support.animation.SpringForce;
+
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+
+import androidx.dynamicanimation.animation.DynamicAnimation;
+import androidx.dynamicanimation.animation.SpringAnimation;
+import androidx.dynamicanimation.animation.SpringForce;
 
 import com.dimowner.tastycocktails.util.AndroidUtils;
 import com.dimowner.tastycocktails.widget.ThresholdListener;

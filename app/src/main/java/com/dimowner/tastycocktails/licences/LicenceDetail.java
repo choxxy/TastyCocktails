@@ -17,15 +17,15 @@
 package com.dimowner.tastycocktails.licences;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.webkit.WebView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.dimowner.tastycocktails.R;
 import com.dimowner.tastycocktails.TCApplication;
-import com.dimowner.tastycocktails.analytics.MixPanel;
 import com.dimowner.tastycocktails.util.AndroidUtils;
 
 /**
@@ -74,7 +74,6 @@ public class LicenceDetail extends AppCompatActivity {
 		if (savedInstanceState == null) {
 			AndroidUtils.handleNavigationBarColor(this);
 		}
-		TCApplication.event(getApplicationContext(), MixPanel.EVENT_LICENCE_DETAILS);
 	}
 
 	@Override
